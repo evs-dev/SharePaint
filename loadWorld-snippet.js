@@ -1,7 +1,7 @@
 function loadWorld() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has('world')) return;
-    const rows = urlParams.get('world').split(';');
+    if (!urlParams.has('pixels')) return;
+    const rows = urlParams.get('pixels').split(';');
     if (rows.length !== 16) return;
     const bg = urlParams.has('bg') ? parseInt(urlParams.get('bg')) : 12; // Light blue
 
