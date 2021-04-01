@@ -66,13 +66,8 @@ function loadPixels() {
             // Skip to next letter or end of pixels
             i = n - (n == pixels.length ? 2 : 1);
         }
-        //console.log(i);
-        //console.log(currentColourNumber);
-        //console.log(currentColourLength);
     }
 
-    //runs.forEach((v) => console.log([v.currentColourNumber, v.currentColourLength]));
-    //console.log(pixels);
     console.log(runs);
 
     let runIndex = -1;
@@ -82,12 +77,11 @@ function loadPixels() {
         for (let x = 0; x <= 15; x++) {
             if (remainingColourLength <= 0 && runIndex < runs.length - 1) {
                 runIndex++;
-                console.log(runIndex);
                 remainingColourLength = runs[runIndex].colourLength;
             }
             remainingColourLength--;
 
-            _cartdat[index + x] = (runs[runIndex].colourNumber) + 32;
+            _cartdat[index + x] = runs[runIndex].colourNumber + 32;
         }
     }
 }
