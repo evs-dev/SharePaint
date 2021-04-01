@@ -2,8 +2,8 @@
 
 function loadOldEncoding() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has('pixels')) return;
-    const rows = urlParams.get('pixels').split(';');
+    if (!urlParams.has('world')) return;
+    const rows = urlParams.get('world').split(';');
     if (rows.length !== 16) return;
     const bg = urlParams.has('bg') ? parseInt(urlParams.get('bg')) : 12; // Light blue
 
@@ -29,11 +29,14 @@ function isLetter(char) {
 function loadPixels() {
     const urlParams = new URLSearchParams(window.location.search);
     _cartdat[8192 + 16] = urlParams.has('outline') ? parseInt(urlParams.get('outline')) : 1;
-    if (urlParams.has('bg')) {
+
+    if (urlParams.has('world') || urlParams.has('bg')) {
         loadOldEncoding();
         return;
     }
+
     if (!urlParams.has('pixels')) return;
+
     // Split into list of characters
     const pixels = urlParams.get('pixels').split('');
 
