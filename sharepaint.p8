@@ -1,11 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
-version 29
+version 32
 __lua__
 --sharepaint
---웃evan
+--웃evs
 
 function _init()
- menuitem(1,"save world",save_world)
+ menuitem(1,"save pixels",save_pixels)
  menuitem(3,"toggle outline",
   function()
    outline=not outline
@@ -80,7 +80,7 @@ function drw_slct(x,y,c)
  pal()
 end
 
-function save_world()
+function save_pixels()
  local output=""
  local current_col=-1
  local current_count=0
@@ -100,35 +100,11 @@ function save_world()
    end
   end
  end
-
  printh(output,"@clip")
 end
 
 function col_to_letter(c)
  return chr(c + 65)
-end
-
-function find_majority_col()
- local counts={}
- for i=0,15 do
-  add(counts,0)
- end
- for y=0,15 do
-  for x=0,15 do
-   local col=mget(x,y)
-   counts[col-32+1]+=1
-  end
- end
- local highest_cnt=0
- local highest=12
- for i=0,15 do
-  if counts[i+1]>highest_cnt then
-   highest=i
-   highest_cnt=counts[i+1]
-  end
- end
- msg=highest
- return highest+32
 end
 
 function paint_bucket(x,y)
