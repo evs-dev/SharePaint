@@ -42,26 +42,28 @@ function loadPixels() {
     let currentColourNumber = -1;
     let currentColourLength = 0;
     for (let i = 0; i < pixels.length; i++) {
-        let char = pixels[i];
-        if (isLetter(char) || i == pixels.length - 1) {
+        const char = pixels[i];
+        if (isLetter(char)) {
             // Save previous to runs if exists
             if (currentColourNumber >= 0 && currentColourLength > 0) {
                 runs.push({ colourNumber: currentColourNumber, colourLength: currentColourLength });
             }
             currentColourNumber = letterToColourNumber(char);
+            // Enables letters without subsequent numbers to count as length 1
             currentColourLength = 1;
+            // Allow the final letter to have no number and just fill the rest of the canvas
+            if (i == pixels.length - 1) {
+                runs.push({ colourNumber: currentColourNumber, colourLength: currentColourLength });
+            }
         } else {
-            let numberString = '';
-            let n = i;
+            let numberString = char;
+            let n = i + 1;
             while (n < pixels.length && !isLetter(pixels[n])) {
                 numberString += pixels[n];
                 n++;
             }
-            let finalLength = parseInt(numberString);
-            if (finalLength <= 0) {
-                finalLength = 1;
-            }
-            currentColourLength = finalLength;
+            currentColourLength = parseInt(numberString);
+            // Skip to next letter or end of pixels
             i = n - (n == pixels.length ? 2 : 1);
         }
         //console.log(i);
