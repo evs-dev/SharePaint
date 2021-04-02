@@ -6,16 +6,15 @@ https://evs-dev.github.io/SharePaint
 
 ## Usage
 
-`sharepaint.js` has the ability to parse URL parameters into an image displayed using the map system in PICO-8. To save a drawing, press Enter to open the pause menu and select "`SAVE WORLD`", and press CTRL+C. This should copy your drawing to text in your clipboard, which you can insert into a URL.
+`sharepaint.js` has the ability to parse URL parameters into an image displayed using the map system in PICO-8. To save a drawing, press Enter to open the pause menu and select "`SAVE PIXELS`", and press CTRL+C. This should copy your drawing to text in your clipboard, which you can insert into a URL.
 
 Here are the current URL parameters:
-- `world` - the drawing pixel data. Drawings are 16x16, and are separated into rows by `;`. Each pixel in a row is separated by `,`, but some are left out because they are majority-coloured pixels; they will be the colour specified by `bg`.
-- `bg` - the background colour which `world` substitutes in to empty pixel data (e.g. an empty row [`;`] will be the colour specified by `bg` instead of some default colour). If no colour is specified, it defaults to 12 (light blue). `bg` is added automatically by `save_world()` in `sharepaint.js` and is determined by finding the most common colour (the majority).
+- `pixels` - the pixel data encoded with run-length encoding. Letters correspond to PICO-8 colours (A = 0 = black, H = 7 = white, etc.). Numbers are the run lengths. If there is no number following a letter, the number is presumed to be 1 unless the letter is the last character, in which case it stretches to the end of the canvas.
 - `outline` - whether or not the in-app selection outline is visible or not by default (0 = invisible, >0 = visible). Can be toggled in-app by pressing Enter and selecting the "`TOGGLE OUTLINE`" option.
 
 Here is an example of a URL:
 
-https://evs-dev.github.io/SharePaint?world=;;,,,,14,14,,,,,14,14,;,,,14,14,14,14,,,14,14,14,14,;,,14,14,14,14,14,14,14,14,7,7,14,14,;,,14,14,14,14,14,14,14,14,14,7,14,14,;,,,14,14,14,14,14,14,14,14,14,14,;,,,8,14,14,14,14,14,14,14,14,14,;,,,8,14,14,14,14,14,14,14,14,14,;,,,,8,14,14,14,14,14,14,14,;,,,,,8,14,14,14,14,8,;,,,,,,8,8,8,8,;;;;&bg=2&outline=0
+https://evs-dev.github.io/SharePaint?pixels=c36o2c4o2c7o4c2o4c5o8h2o2c4o9ho2c5o10c6io9c6io9c7io7c9io4ic11i4c&outline=0
 
 which results in this:
 
