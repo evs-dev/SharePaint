@@ -40,6 +40,11 @@ function loadPixels() {
     // Split into list of characters
     const pixels = urlParams.get('pixels').split('');
 
+    // Remove trailing numbers
+    while (!isLetter(pixels[pixels.length - 1])) {
+        pixels.splice(pixels.length - 1, 1);
+    }
+
     // Make runs
     const runs = [];
     let currentColourNumber = -1;
