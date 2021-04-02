@@ -1,4 +1,4 @@
-// file:///E:/Games/PICO-8/SharePaint/index.html?pixels=A2B36CD36IG12F19J1
+// Heart: c36o2c4o2c7o4c2o4c5o8h2o2c4o9ho2c5o10c6io9c6io9c7io7c9io4ic11i4c
 
 function loadOldEncoding() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -17,13 +17,13 @@ function loadOldEncoding() {
     }
 }
 
-function letterToColourNumber(letterChar) {
+function letterToColourNumber(char) {
     // 'A' = 65
-    return letterChar.toUpperCase().charCodeAt(0) - 65;
+    return char.length === 1 && char.toUpperCase().charCodeAt(0) - 65;
 }
 
 function isLetter(char) {
-    return 'abcdefghijklmnopqrstuvwxyz'.includes(char.toLowerCase());
+    return char.length === 1 && char.match(/[a-z]/i)
 }
 
 function loadPixels() {
@@ -60,8 +60,8 @@ function loadPixels() {
             // Enables letters without subsequent numbers to count as length 1
             currentColourLength = 1;
             // Allow the final letter to have no number and just fill the rest of the canvas
-            if (i == pixels.length - 1) {
-                runs.push({ colourNumber: currentColourNumber, colourLength: currentColourLength });
+            if (i === pixels.length - 1) {
+                runs.push({ colourNumber: currentColourNumber, colourLength: 1 });
             }
         } else {
             let numberString = char;
@@ -72,7 +72,7 @@ function loadPixels() {
             }
             currentColourLength = parseInt(numberString);
             // Skip to next letter or end of pixels
-            i = n - (n == pixels.length ? 2 : 1);
+            i = n - (n === pixels.length ? 2 : 1);
         }
     }
 
