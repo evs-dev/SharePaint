@@ -20,7 +20,7 @@ function _init()
  mode=0
 end
 
-function _update60()--30?
+function _update()
  if mode==0 then
 	 if(btnp(⬅️))sx-=1
 	 if(btnp(➡️))sx+=1
