@@ -15,7 +15,7 @@ function _init()
  sy=7
  cx=0
  tx=0
- outline=true
+ outline=mget(16,0)!=0
  msg=""
  mode=0
 end
