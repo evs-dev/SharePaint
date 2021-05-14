@@ -5,8 +5,10 @@ __lua__
 --웃evs
 
 function _init()
- menuitem(1,"save pixels",save_pixels)
- menuitem(3,"toggle outline",
+ menuitem(1,"save pixels",
+  save_pixels
+ )
+ menuitem(2,"toggle outline",
   function()
    outline=not outline
   end
@@ -15,9 +17,8 @@ function _init()
  sy=7
  cx=0
  tx=0
- outline=mget(16,0)!=0
- msg=""
  mode=0
+ outline=mget(16,0)!=0
 end
 
 function _update()
@@ -73,8 +74,6 @@ function _draw()
   end
   drw_slct(x,15,sc)
  end
-
- print(msg,0,0,7)
 end
 
 function drw_slct(mx,my,c)
@@ -99,12 +98,12 @@ function save_pixels()
    local col=mget(x,y)
    if col!=current_col then
     if current_count>1 then
-     output=output..tostr(current_count)
+     output..=tostr(current_count)
     end
     current_count=1
     current_col=col
     local letter=col_to_letter(col)
-    output=output..letter
+    output..=letter
    else
     current_count+=1
    end
