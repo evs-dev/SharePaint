@@ -213,8 +213,12 @@
 				{
 					// menu button: half as high as X O button
 					// stretch across right-hand half above X O buttons
-					if (x > w - r*3)
+					if (x > w - r*3) {
 						b |= 0x40;
+						// @evs-dev
+						// save pixels menu option can be selected with the menu button
+						if (pico8_state.is_paused) sharepaint_checkPixelsSaved();
+					}
 				}
 				else if (x < w/2 && x < r*6)
 				{
@@ -246,12 +250,15 @@
 					mask = 0x30;
 
 					// one or both of [X], [O]
-					if ( (h-y) > (w-x) * 0.8) b |= 0x10;
+					// @evs-dev
+					// save pixels menu option can be selected with [X] and [O]
+					if ( (h-y) > (w-x) * 0.8) {
+						b |= 0x10;
+						if (pico8_state.is_paused) sharepaint_checkPixelsSaved();
+					}
 					if ( (w-x) > (h-y) * 0.8) {
 						b |= 0x20;
-						// @evs-dev
-						// save pixels menu option might have been selected with [X]
-						sharepaint_checkPixelsSaved();
+						if (pico8_state.is_paused) sharepaint_checkPixelsSaved();
 					}
 				}
 			}
@@ -569,9 +576,11 @@
 			// Load pixels here
 			loadPixels();
 
-			// If enter pressed, check if the 'save pixels' menu option was chosen
+			copyArea = document.getElementById('codo_textarea');
+
+			// If pause menu option selected, check if it was the 'save pixels' option
 			document.addEventListener('keydown', function(e) {
-				if (e.keyCode === 13) {
+				if (pico8_state.is_paused && [13, 90, 88, 67, 86].includes(e.keyCode)) {
 					sharepaint_checkPixelsSaved();
 				}
 			});
@@ -599,11 +608,11 @@
 		}
 	}
 
+	var copyArea;
 	// Check if the 'save pixels' menu option was selected
 	// P8 puts a value in codo_textarea when 'writing to the clipboard',
 	// so if code_textarea isn't blank, the option must have been selected
 	function sharepaint_checkPixelsSaved() {
-		const copyArea = document.getElementById('codo_textarea');
 		setTimeout(function() {
 			if (!(copyArea.value.length === 0 || !copyArea.value.trim())) {
 				var urlNoParams = location.protocol + '//' + location.host + location.pathname;
@@ -612,7 +621,6 @@
 			}
 		}, 100);
 	}
-
 
 	// gamepad  https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 	// (sets bits in pico8_buttons[])
@@ -830,7 +838,7 @@ canvas{
 
 			<!-- used for clipboard access & keyboard input; displayed and used by PICO-8 only once needed. can be safely removed if clipboard / key presses not needed. -->
 			<!-- (needs to be inside p8_playarea so that it still works under Chrome when fullscreened) -->
-			<textarea id="codo_textarea" class="emscripten" style="display:none; position:absolute; left:-9999px; height:0px; overflow:hidden"></textarea>
+			<textarea id="codo_textarea" class="emscripten" style="display:none; position:absolute; left:-9999px; height:0px; overflow:hidden" readonly></textarea>
 
 		</div> <!--p8_playarea -->
 
