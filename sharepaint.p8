@@ -66,17 +66,27 @@ function _draw()
   end
   palt(0,true)
   local x=cx
-  if(mode==2)x=tx
-  drw_slct(x,15,mode+6)
+  local sc
+  if mode==2 then
+   x=tx
+   sc=8
+  end
+  drw_slct(x,15,sc)
  end
 
- print(msg,0,0)
+ print(msg,0,0,7)
 end
 
-function drw_slct(x,y,c)
- c=c or 7
+function drw_slct(mx,my,c)
+ local x=mx*8
+ local y=my*8
+ -- white if bg is dark,
+ -- black if bg is light
+ local bgcol=pget(x,y)
+ local whiteish=is_whiteish_col(bgcol)
+ c=c or (whiteish and 0 or 7)
  pal(7,c)
- if(outline)spr(1,x*8,y*8)
+ if(outline)spr(1,x,y)
  pal()
 end
 
@@ -105,6 +115,13 @@ end
 
 function col_to_letter(c)
  return chr(c + 65)
+end
+
+function is_whiteish_col(c)
+ return c==6
+     or c==7
+     or c==10
+     or c==15
 end
 
 function paint_bucket(x,y)
