@@ -28,7 +28,7 @@ To save a painting, press Enter to open the pause menu, select "`SAVE PIXELS`", 
 
 Here are the current URL parameters:
 - `pixels` - the pixel data encoded with run-length encoding. Letters correspond to PICO-8 colours (A = 0 = black, H = 7 = white, etc.). Numbers are the run lengths. If there is no number following a letter, the number is presumed to be 1 unless the letter is the last character, in which case it stretches to the end of the canvas.
-- `outline` - whether or not the in-app selection outline is visible or not by default (0 = invisible, >0 = visible). Can be toggled in-app by pressing Enter and selecting the "`TOGGLE OUTLINE`" option.
+- `outline` - whether or not the in-app selection outline is visible by default (0 = invisible, >0 = visible). Can be toggled in-app by pressing Enter and selecting the "`TOGGLE OUTLINE`" option.
 
 Here is an example of a URL:
 
