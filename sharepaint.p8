@@ -22,14 +22,14 @@ end
 
 function _update()
  if mode==0 then
-	 if(btnp(⬅️))sx-=1
-	 if(btnp(➡️))sx+=1
-	 if(btnp(⬆️))sy-=1
-	 if(btnp(⬇️))sy+=1
-	 if(sx<0)sx=0
-	 if(sx>15)sx=15
-	 if(sy<0)sy=0
-	 if(sy>15)sy=15
+  if(btnp(⬅️))sx-=1
+  if(btnp(➡️))sx+=1
+  if(btnp(⬆️))sy-=1
+  if(btnp(⬇️))sy+=1
+  if(sx<0)sx=0
+  if(sx>15)sx=15
+  if(sy<0)sy=0
+  if(sy>15)sy=15
   if btn(❎) then
    if tx==0 then
     mset(sx,sy,cx+32)
@@ -39,14 +39,14 @@ function _update()
   end
  elseif mode==1 then
   if(btnp(⬅️))cx-=1
-	 if(btnp(➡️))cx+=1
-	 if(cx<0)cx=15
-	 if(cx>15)cx=0
+  if(btnp(➡️))cx+=1
+  if(cx<0)cx=15
+  if(cx>15)cx=0
  elseif mode==2 then
   if(btnp(⬅️))tx-=1
-	 if(btnp(➡️))tx+=1
-	 if(tx<0)tx=1
-	 if(tx>1)tx=0
+  if(btnp(➡️))tx+=1
+  if(tx<0)tx=1
+  if(tx>1)tx=0
  end
  if(btnp(🅾️))mode+=1
  if(mode>2)mode=0
@@ -60,7 +60,7 @@ function _draw()
  if mode==0 then
   drw_slct(sx,sy)
  else
-	 palt(0,false)
+  palt(0,false)
   for i=0,15 do
    spr(i+32+16*(mode-1),i*8,120)
   end
@@ -119,12 +119,12 @@ function flood_fill(x,y,sc,ec)
  local curr=mget(x,y)
  if(curr!=sc or curr==ec)return
 
-	mset(x,y,ec)
+ mset(x,y,ec)
 
-	flood_fill(x+1,y,sc,ec)
-	flood_fill(x,y+1,sc,ec)
-	flood_fill(x-1,y,sc,ec)
-	flood_fill(x,y-1,sc,ec)
+ flood_fill(x+1,y,sc,ec)
+ flood_fill(x,y+1,sc,ec)
+ flood_fill(x-1,y,sc,ec)
+ flood_fill(x,y-1,sc,ec)
 end
 __gfx__
 00000000777777770000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
