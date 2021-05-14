@@ -22,7 +22,7 @@ https://evs-dev.github.io/SharePaint
 
 #### Saving a Painting
 
-To save a painting, press Enter to open the pause menu, select "`SAVE PIXELS`", and press enter. Then press CTRL+C to copy it to your clipboard (this doesn't work on mobile devices). You can now insert this into a URL to share (https://evs-dev.github.io/SharePaint?pixels=YOUR_PAINTING_HERE).
+To save a painting, open the pause menu (Enter or the small rectangular button on mobile), select "`SAVE PIXELS`", and press enter/X. The page will reload and the URL will be updated with your painting. You can now copy the URL to share.
 
 ### URL Parameters
 
