@@ -19,11 +19,11 @@ function loadOldEncoding() {
 
 function letterToColourNumber(char) {
     // 'A' = 65
-    return char.length === 1 && char.toUpperCase().charCodeAt(0) - 65;
+    return char && char.toUpperCase().charCodeAt(0) - 65;
 }
 
 function isLetter(char) {
-    return char.length === 1 && char.match(/[a-z]/i)
+    return char && char.length === 1 && char.match(/[a-z]/i)
 }
 
 function loadPixels() {
@@ -36,8 +36,8 @@ function loadPixels() {
     }
 
     if (!urlParams.has('pixels')) return;
+    if (urlParams.get('pixels') == '') return;
 
-    // Split into list of characters
     const pixels = urlParams.get('pixels').split('');
 
     // Remove trailing numbers
