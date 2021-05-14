@@ -247,7 +247,12 @@
 
 					// one or both of [X], [O]
 					if ( (h-y) > (w-x) * 0.8) b |= 0x10;
-					if ( (w-x) > (h-y) * 0.8) b |= 0x20;
+					if ( (w-x) > (h-y) * 0.8) {
+						b |= 0x20;
+						// @evs-dev
+						// save pixels menu option might have been selected with [X]
+						sharepaint_checkPixelsSaved();
+					}
 				}
 			}
 
@@ -560,9 +565,16 @@
 			if (typeof(p8_buttons_hash) !== 'undefined')
 				p8_buttons_hash = -33;
 
+			// @evs-dev
 			// Load pixels here
 			loadPixels();
 
+			// If enter pressed, check if the 'save pixels' menu option was chosen
+			document.addEventListener('keydown', function(e) {
+				if (e.keyCode === 13) {
+					sharepaint_checkPixelsSaved();
+				}
+			});
 		}
 		e.type = "application/javascript";
 		e.src = "sharepaint.js";
@@ -585,6 +597,20 @@
 					window.location.reload();
 			}
 		}
+	}
+
+	// Check if the 'save pixels' menu option was selected
+	// P8 puts a value in codo_textarea when 'writing to the clipboard',
+	// so if code_textarea isn't blank, the option must have been selected
+	function sharepaint_checkPixelsSaved() {
+		const copyArea = document.getElementById('codo_textarea');
+		setTimeout(function() {
+			if (!(copyArea.value.length === 0 || !copyArea.value.trim())) {
+				var urlNoParams = location.protocol + '//' + location.host + location.pathname;
+				// Reload the page with new pixels
+				window.location = urlNoParams + "?pixels=" + copyArea.value;
+			}
+		}, 100);
 	}
 
 
