@@ -59,7 +59,7 @@ function _draw()
  map(0,0,0,0,16,16)
  palt()
  if mode==0 then
-  drw_slct(sx,sy)
+  if(outline)drw_slct(sx,sy)
  else
   palt(0,false)
   for i=0,15 do
@@ -85,7 +85,7 @@ function drw_slct(mx,my,c)
  local whiteish=is_whiteish_col(bgcol)
  c=c or (whiteish and 0 or 7)
  pal(7,c)
- if(outline)spr(1,x,y)
+ spr(1,x,y)
  pal()
 end
 
