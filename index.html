@@ -617,7 +617,7 @@
 			if (!(copyArea.value.length === 0 || !copyArea.value.trim())) {
 				var urlNoParams = location.protocol + '//' + location.host + location.pathname;
 				// Reload the page with new pixels
-				window.location = urlNoParams + "?pixels=" + copyArea.value;
+				window.location = urlNoParams + "?pixels=" + copyArea.value + "&outline=0";
 			}
 		}, 100);
 	}
