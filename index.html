@@ -543,7 +543,7 @@
 		}
 
 		// create audio context and wake it up (for iOS -- needs happen inside touch event)
-		p8_create_audio_context();
+		//p8_create_audio_context();
 
 		// show touch elements
 		els = document.getElementsByClassName('p8_controller_area');
@@ -789,7 +789,7 @@ canvas{
 
 	<div id="p8_menu_buttons_touch" style="position:absolute; width:100%; z-index:10; left:0px;">
 		<div class="p8_menu_button" id="p8b_full"  style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
-		<div class="p8_menu_button" id="p8b_sound" style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
+		<!-- <div class="p8_menu_button" id="p8b_sound" style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div> -->
 		<div class="p8_menu_button" id="p8b_close" style="float:right; margin-right:10px" onClick="p8_close_cart();"></div>
 	</div>
 
@@ -817,9 +817,9 @@ canvas{
 				<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault();" >
 				</canvas>
 				<div class=p8_menu_buttons id="p8_menu_buttons" style="margin-left:10px;">
-					<div class="p8_menu_button" style="position:absolute; bottom:125px" id="p8b_controls" onClick="p8_give_focus(); Module.pico8ToggleControlMenu();"></div>
-					<div class="p8_menu_button" style="position:absolute; bottom:90px" id="p8b_pause" onClick="p8_give_focus(); Module.pico8TogglePaused(); p8_update_layout_hash = -22;"></div>
-					<div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_sound" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
+					<div class="p8_menu_button" style="position:absolute; bottom:90px" id="p8b_controls" onClick="p8_give_focus(); Module.pico8ToggleControlMenu();"></div>
+					<div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_pause" onClick="p8_give_focus(); Module.pico8TogglePaused(); p8_update_layout_hash = -22;"></div>
+					<!-- <div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_sound" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div> -->
 					<div class="p8_menu_button" style="position:absolute; bottom:20px" id="p8b_full" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
 				</div>
 			</div>
