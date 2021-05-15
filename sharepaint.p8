@@ -8,17 +8,12 @@ function _init()
  menuitem(1,"save pixels",
   save_pixels
  )
- menuitem(2,"toggle outline",
-  function()
-   outline=not outline
-  end
- )
  sx=7
  sy=7
  cx=0
  tx=0
  mode=0
- outline=mget(16,0)!=0
+ outline=mget(16,0)==0 and 120 or 0
 end
 
 function _update()
@@ -38,6 +33,11 @@ function _update()
     paint_bucket(sx,sy)
    end
   end
+  if btnp()>0 then
+   outline=0
+  else
+   outline+=1
+  end
  elseif mode==1 then
   if(btnp(⬅️))cx-=1
   if(btnp(➡️))cx+=1
@@ -49,8 +49,11 @@ function _update()
   if(tx<0)tx=1
   if(tx>1)tx=0
  end
- if(btnp(🅾️))mode+=1
- if(mode>2)mode=0
+ if btnp(🅾️) then
+  mode+=1
+  if(mode>2)mode=0
+  outline=0
+ end
 end
 
 function _draw()
@@ -59,7 +62,7 @@ function _draw()
  map(0,0,0,0,16,16)
  palt()
  if mode==0 then
-  if(outline)drw_slct(sx,sy)
+  if(outline<120)drw_slct(sx,sy)
  else
   palt(0,false)
   for i=0,15 do
