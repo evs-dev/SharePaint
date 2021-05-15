@@ -22,13 +22,13 @@ https://evs-dev.github.io/SharePaint
 
 #### Saving a Painting
 
-To save a painting, press Enter to open the pause menu, select "`SAVE PIXELS`", and press enter. Then press CTRL+C to copy it to your clipboard (this doesn't work on mobile devices). You can now insert this into a URL to share (https://evs-dev.github.io/SharePaint?pixels=YOUR_PAINTING_HERE).
+To save a painting, open the pause menu (Enter or the small rectangular button on mobile), select "`SAVE PIXELS`", and press enter/X. The page will reload and the URL will be updated with your painting. You can now copy the URL to share.
 
 ### URL Parameters
 
 Here are the current URL parameters:
 - `pixels` - the pixel data encoded with run-length encoding. Letters correspond to PICO-8 colours (A = 0 = black, H = 7 = white, etc.). Numbers are the run lengths. If there is no number following a letter, the number is presumed to be 1 unless the letter is the last character, in which case it stretches to the end of the canvas.
-- `outline` - whether or not the in-app selection outline is visible or not by default (0 = invisible, >0 = visible). Can be toggled in-app by pressing Enter and selecting the "`TOGGLE OUTLINE`" option.
+- `outline` - whether or not the selection outline is visible by default (0 = invisible, >0 = visible). The outline hides itself automatically after 4 seconds of inactivity, and reappears as soon as a button is pressed. This parameter only affects the start state.
 
 Here is an example of a URL:
 

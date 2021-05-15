@@ -5,31 +5,27 @@ __lua__
 --웃evs
 
 function _init()
- menuitem(1,"save pixels",save_pixels)
- menuitem(3,"toggle outline",
-  function()
-   outline=not outline
-  end
+ menuitem(1,"save pixels",
+  save_pixels
  )
  sx=7
  sy=7
  cx=0
  tx=0
- outline=mget(16,0)!=0
- msg=""
  mode=0
+ outline=mget(16,0)==0 and 120 or 0
 end
 
 function _update()
  if mode==0 then
-	 if(btnp(⬅️))sx-=1
-	 if(btnp(➡️))sx+=1
-	 if(btnp(⬆️))sy-=1
-	 if(btnp(⬇️))sy+=1
-	 if(sx<0)sx=0
-	 if(sx>15)sx=15
-	 if(sy<0)sy=0
-	 if(sy>15)sy=15
+  if(btnp(⬅️))sx-=1
+  if(btnp(➡️))sx+=1
+  if(btnp(⬆️))sy-=1
+  if(btnp(⬇️))sy+=1
+  if(sx<0)sx=0
+  if(sx>15)sx=15
+  if(sy<0)sy=0
+  if(sy>15)sy=15
   if btn(❎) then
    if tx==0 then
     mset(sx,sy,cx+32)
@@ -37,19 +33,27 @@ function _update()
     paint_bucket(sx,sy)
    end
   end
+  if btnp()>0 then
+   outline=0
+  else
+   outline+=1
+  end
  elseif mode==1 then
   if(btnp(⬅️))cx-=1
-	 if(btnp(➡️))cx+=1
-	 if(cx<0)cx=15
-	 if(cx>15)cx=0
+  if(btnp(➡️))cx+=1
+  if(cx<0)cx=15
+  if(cx>15)cx=0
  elseif mode==2 then
   if(btnp(⬅️))tx-=1
-	 if(btnp(➡️))tx+=1
-	 if(tx<0)tx=1
-	 if(tx>1)tx=0
+  if(btnp(➡️))tx+=1
+  if(tx<0)tx=1
+  if(tx>1)tx=0
  end
- if(btnp(🅾️))mode+=1
- if(mode>2)mode=0
+ if btnp(🅾️) then
+  mode+=1
+  if(mode>2)mode=0
+  outline=0
+ end
 end
 
 function _draw()
@@ -58,25 +62,33 @@ function _draw()
  map(0,0,0,0,16,16)
  palt()
  if mode==0 then
-  drw_slct(sx,sy)
+  if(outline<120)drw_slct(sx,sy)
  else
-	 palt(0,false)
+  palt(0,false)
   for i=0,15 do
    spr(i+32+16*(mode-1),i*8,120)
   end
   palt(0,true)
   local x=cx
-  if(mode==2)x=tx
-  drw_slct(x,15,mode+6)
+  local sc
+  if mode==2 then
+   x=tx
+   sc=8
+  end
+  drw_slct(x,15,sc)
  end
-
- print(msg,0,0)
 end
 
-function drw_slct(x,y,c)
- c=c or 7
+function drw_slct(mx,my,c)
+ local x=mx*8
+ local y=my*8
+ -- white if bg is dark,
+ -- black if bg is light
+ local bgcol=pget(x,y)
+ local whiteish=is_whiteish_col(bgcol)
+ c=c or (whiteish and 0 or 7)
  pal(7,c)
- if(outline)spr(1,x*8,y*8)
+ spr(1,x,y)
  pal()
 end
 
@@ -89,12 +101,12 @@ function save_pixels()
    local col=mget(x,y)
    if col!=current_col then
     if current_count>1 then
-     output=output..tostr(current_count)
+     output..=tostr(current_count)
     end
     current_count=1
     current_col=col
     local letter=col_to_letter(col)
-    output=output..letter
+    output..=letter
    else
     current_count+=1
    end
@@ -105,6 +117,13 @@ end
 
 function col_to_letter(c)
  return chr(c + 65)
+end
+
+function is_whiteish_col(c)
+ return c==6
+     or c==7
+     or c==10
+     or c==15
 end
 
 function paint_bucket(x,y)
@@ -119,12 +138,12 @@ function flood_fill(x,y,sc,ec)
  local curr=mget(x,y)
  if(curr!=sc or curr==ec)return
 
-	mset(x,y,ec)
+ mset(x,y,ec)
 
-	flood_fill(x+1,y,sc,ec)
-	flood_fill(x,y+1,sc,ec)
-	flood_fill(x-1,y,sc,ec)
-	flood_fill(x,y-1,sc,ec)
+ flood_fill(x+1,y,sc,ec)
+ flood_fill(x,y+1,sc,ec)
+ flood_fill(x-1,y,sc,ec)
+ flood_fill(x,y-1,sc,ec)
 end
 __gfx__
 00000000777777770000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -289,7 +308,7 @@ __label__
 22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
 __map__
-2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
