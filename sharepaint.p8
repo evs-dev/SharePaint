@@ -12,6 +12,7 @@ function _init()
  sy=7
  cx=0
  tx=0
+ bottom_y=128
  mode=0
  outline=mget(16,0)==0 and 120 or 0
 end
@@ -38,12 +39,15 @@ function _update()
   else
    outline+=1
   end
+  if(bottom_y<128)bottom_y+=2
  elseif mode==1 then
+  if(bottom_y>120)bottom_y-=2
   if(btnp(⬅️))cx-=1
   if(btnp(➡️))cx+=1
   if(cx<0)cx=15
   if(cx>15)cx=0
  elseif mode==2 then
+  if(bottom_y>120)bottom_y-=2
   if(btnp(⬅️))tx-=1
   if(btnp(➡️))tx+=1
   if(tx<0)tx=1
@@ -63,19 +67,22 @@ function _draw()
  palt()
  if mode==0 then
   if(outline<120)drw_slct(sx,sy)
- else
+ end
+ if bottom_y<128 then
   palt(0,false)
   for i=0,15 do
-   spr(i+32+16*(mode-1),i*8,120)
+   spr(i+32+16*(mode-1),i*8,bottom_y)
   end
   palt(0,true)
-  local x=cx
-  local sc
-  if mode==2 then
-   x=tx
-   sc=8
+  if mode>0 then
+   local x=cx
+   local sc
+   if mode==2 then
+    x=tx
+    sc=8
+   end
+   if(bottom_y==120)drw_slct(x,15,sc)
   end
-  drw_slct(x,15,sc)
  end
 end
 
