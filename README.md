@@ -19,6 +19,8 @@ https://evs-dev.github.io/SharePaint
 
 - Paint Brush: Paints a single pixel
 - Paint Bucket: Flood fills all the pixels of the same colour connected to the current pixel
+- Undo: Reverts the most recent change
+- Redo: Reverts the most recent reversion
 
 #### Saving a Painting
 
@@ -67,3 +69,7 @@ The `loadPixels()` function in `pixelsLoader.js` turns the run-length string in 
 #### Flood Fill Algorithm
 
 SharePaint implements a recursive [flood fill algorithm](https://en.wikipedia.org/wiki/Flood_fill) for the Paint Bucket tool in `flood_fill()` in `sharepaint.p8`. It tests neighbouring pixels in the cardinal directions for a match to the selected pixel's colour, and sets those matching pixels to be the end colour. Each set pixel then does the same thing, and so on. This of course finishes when there are no more connected pixels of the starting colour.
+
+#### Undo/Redo
+
+It's always useful to be able to reverse a Paint Bucket spillage or reverse that reversal. The Undo/Redo tools allow this. Before a change is made to the painting (e.g. the Paint Brush or Paint Bucket is used), all the pixels are temporarily saved. Then after the change, the new pixels are compared to those old saved ones, and all pixels that changed, along with their old and new colours, are added to a new table in the `history` list. Using the Undo tool cycles back in history, applying the old colour (`old_c` in the code). Using the Redo tool cycles forward in history, applying the new colour of the change (`new_c`). When back in history, i.e. there are 'future' that could be redone into, and a change is made, all of those future changes are discarded and the most recent change becomes the latest one. There is a limit of 256 changes in `history` to prevent running out of memory.
